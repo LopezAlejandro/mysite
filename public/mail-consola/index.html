@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <!-- viewport-fit=cover is to support iPhone X rounded corners and notch in landscape-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+      <title>Bitácora de un Sysadmin</title>
+
+      <!-- CSS -->
+      <link rel="stylesheet" href="https:&#x2F;&#x2F;example.com&#x2F;print.css" media="print">
+      <link rel="stylesheet" href="https:&#x2F;&#x2F;example.com&#x2F;poole.css">
+      <link rel="stylesheet" href="https:&#x2F;&#x2F;example.com&#x2F;hyde.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+      
+
+      
+      
+    </head>
+
+    <body class="theme-base-08 layout-reverse">
+        
+            <div class="sidebar">
+                <div class="container sidebar-sticky">
+                    <div class="sidebar-about">
+                        
+                            <a href="https:&#x2F;&#x2F;example.com"><h1>Bitácora de un Sysadmin</h1></a>
+                            
+                            <p class="lead">Notas de un administrador</p>
+                            
+                        
+                    </div>
+
+                    <ul class="sidebar-nav">
+                        
+                        
+                        <li class="sidebar-nav-item"><a href="https:&#x2F;&#x2F;biblioteca.fadu.uba.ar">Biblioteca FADU</a></li>
+                        
+                        <li class="sidebar-nav-item"><a href="https:&#x2F;&#x2F;www.cbc.uba.ar">Ciclo Básico Común</a></li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div class="content container">
+            
+<div class="post">
+  <h1 class="post-title">Mail Consola</h1>
+  <span class="post-date">2019-10-08</span>
+  <p>Para enviar un mail por consola a traves de gmail , tenemos que usar el programa mailx.</p>
+<p>Con el script siguiente podemos enviar un mail con un attach a una lista de receptores.</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#65737e;">#!/bin/sh
+# servidor de salida
+</span><span style="color:#bf616a;">FROM_EMAIL_ADDRESS</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">enviador@mi-dominio.com</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#bf616a;">FRIENDLY_NAME</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">nombre-humano</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#bf616a;">EMAIL_ACCOUNT_PASSWORD</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">contraseña</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#bf616a;">SERVER_SMTP</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">smtp://smtp.gmail.com:587</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#bf616a;">EMAIL_SUBJECT</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Lo que quieras como subject</span><span style="color:#c0c5ce;">&quot;
+
+</span><span style="color:#b48ead;">while </span><span style="color:#bf616a;">IFS</span><span style="color:#c0c5ce;">=, read</span><span style="color:#bf616a;"> -r</span><span style="color:#c0c5ce;"> TO_EMAIL_ADDRESS FILE_ATTACH
+</span><span style="color:#b48ead;">do
+    </span><span style="color:#65737e;"># todo lo que pongamos en el echo, sera el contenido del correo
+    </span><span style="color:#96b5b4;">echo </span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">Cualquier cosa que quieras poner.
+    </span><span style="color:#c0c5ce;">&quot; | </span><span style="color:#bf616a;">mailx -v -s </span><span style="color:#c0c5ce;">&quot;$</span><span style="color:#bf616a;">EMAIL_SUBJECT</span><span style="color:#c0c5ce;">&quot; \
+</span><span style="color:#bf616a;">    -a </span><span style="color:#c0c5ce;">$</span><span style="color:#bf616a;">FILE_ATTACH </span><span style="color:#c0c5ce;">\
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> smtp-use-starttls \
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> ssl-verify=ignore \
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> smtp-auth=login \
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> smtp=$</span><span style="color:#bf616a;">SERVER_SMTP </span><span style="color:#c0c5ce;">\
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> from=&quot;$</span><span style="color:#bf616a;">FROM_EMAIL_ADDRESS</span><span style="color:#a3be8c;">(</span><span style="color:#c0c5ce;">$</span><span style="color:#bf616a;">FRIENDLY_NAME</span><span style="color:#a3be8c;">)</span><span style="color:#c0c5ce;">&quot; \
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> smtp-auth-user=$</span><span style="color:#bf616a;">FROM_EMAIL_ADDRESS </span><span style="color:#c0c5ce;">\
+</span><span style="color:#bf616a;">    -S</span><span style="color:#c0c5ce;"> smtp-auth-password=$</span><span style="color:#bf616a;">EMAIL_ACCOUNT_PASSWORD </span><span style="color:#c0c5ce;">\
+    $</span><span style="color:#bf616a;">TO_EMAIL_ADDRESS
+</span><span style="color:#b48ead;">done </span><span style="color:#c0c5ce;">&lt; listado.txt
+</span></pre>
+<p>El formato de listado.txt es el siguiente :</p>
+<p>receptor1,nombre de archivo1</p>
+<p>receptor2,nombre de archivo2</p>
+
+</div>
+
+        </div>
+
+    </body>
+
+</html>
