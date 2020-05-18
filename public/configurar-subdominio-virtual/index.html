@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <!-- viewport-fit=cover is to support iPhone X rounded corners and notch in landscape-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+      <title>Bitácora de un Sysadmin</title>
+
+      <!-- CSS -->
+      <link rel="stylesheet" href="https:&#x2F;&#x2F;lopezalejandro.github.io&#x2F;mysite&#x2F;public&#x2F;print.css" media="print">
+      <link rel="stylesheet" href="https:&#x2F;&#x2F;lopezalejandro.github.io&#x2F;mysite&#x2F;public&#x2F;poole.css">
+      <link rel="stylesheet" href="https:&#x2F;&#x2F;lopezalejandro.github.io&#x2F;mysite&#x2F;public&#x2F;hyde.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+      
+
+      
+      
+    </head>
+
+    <body class="theme-base-08 layout-reverse">
+        
+            <div class="sidebar">
+                <div class="container sidebar-sticky">
+                    <div class="sidebar-about">
+                        
+                            <a href="https:&#x2F;&#x2F;lopezalejandro.github.io&#x2F;mysite&#x2F;public&#x2F;"><h1>Bitácora de un Sysadmin</h1></a>
+                            
+                            <p class="lead">Notas de un administrador</p>
+                            
+                        
+                    </div>
+
+                    <ul class="sidebar-nav">
+                        
+                        
+                        <li class="sidebar-nav-item"><a href="https:&#x2F;&#x2F;biblioteca.fadu.uba.ar">Biblioteca FADU</a></li>
+                        
+                        <li class="sidebar-nav-item"><a href="https:&#x2F;&#x2F;www.cbc.uba.ar">Ciclo Básico Común</a></li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div class="content container">
+            
+<div class="post">
+  <h1 class="post-title">Configurar subdominio en un DNS</h1>
+  <span class="post-date">2020-05-18</span>
+  <h3 id="crear-un-subdominio-virtual">Crear un subdominio virtual</h3>
+<p>En este caso suponemos de tenemos configurado un servidor DNS donde hemos configurado la zona example.org en el fichero <em>/var/cache/bind/db.example.org.</em> La configuración del subdominio virtual se ha indicado en negrita, y quedaría de la siguiente manera:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">	$</span><span style="color:#bf616a;">TTL</span><span style="color:#c0c5ce;">    86400
+	</span><span style="color:#bf616a;">@</span><span style="color:#c0c5ce;">       IN      SOA     ns1.example.org. mail.example.org. (
+	                              </span><span style="color:#bf616a;">4         
+	                         604800         
+	                          86400         
+	                        2419200       
+	                          86400 </span><span style="color:#c0c5ce;">)       
+		
+	$</span><span style="color:#bf616a;">ORIGIN</span><span style="color:#c0c5ce;"> example.org.
+	</span><span style="color:#bf616a;">@</span><span style="color:#c0c5ce;">       IN      NS      ns1
+		
+	</span><span style="color:#bf616a;">ns1</span><span style="color:#c0c5ce;">     IN      A       10.0.10.2
+	</span><span style="color:#bf616a;">www</span><span style="color:#c0c5ce;">     IN      A       10.0.10.1
+		
+	$</span><span style="color:#bf616a;">ORIGIN</span><span style="color:#c0c5ce;"> es.example.org.
+	</span><span style="color:#bf616a;">www</span><span style="color:#c0c5ce;">     IN      A      10.10.0.3
+</span></pre>
+<p>Después de reiniciar el servidor podemos hacer una consulta con la utilidad dig, de la siguiente manera:</p>
+<p>$ dig @10.0.10.2 www.es.example.org</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">	; &lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt; DiG </span><span style="color:#bf616a;">9.8.4-rpz2+rl005.12-P1 </span><span style="color:#c0c5ce;">&lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt; @10.0.10.2 www.es.example.org
+	; (</span><span style="color:#bf616a;">1</span><span style="color:#c0c5ce;"> server found)
+	;; </span><span style="color:#bf616a;">global</span><span style="color:#c0c5ce;"> options: +cmd
+	;; </span><span style="color:#bf616a;">Got</span><span style="color:#c0c5ce;"> answer:
+	;; </span><span style="color:#bf616a;">-</span><span style="color:#c0c5ce;">&gt;&gt;&gt;&gt;HEADER&lt;&lt;&lt;&lt;- </span><span style="color:#b48ead;">opcode</span><span style="color:#c0c5ce;">: QUERY, status: NOERROR, id: 61235</span><span style="color:#a3be8c;">
+	;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+	
+	;; QUESTION SECTION:
+	;www.es.example.org.		IN	A
+	
+	;; ANSWER SECTION:
+	www.es.example.org.	86400	IN	A	10.10.0.3
+	
+	;; AUTHORITY SECTION:
+	example.org.		86400	IN	NS	ns1.example.org.
+	
+	;; ADDITIONAL SECTION:
+	ns1.example.org.	86400	IN	A	10.0.10.2
+	
+	;; Query time: 0 msec
+	;; SERVER: 10.0.10.2#53(10.0.10.2)
+	;; WHEN: Thu Nov 21 15:27:26 2013
+	;; MSG SIZE  rcvd: 86
+</span></pre>
+<p>Donde podemos observar que la resolución se hace correctamente, y como señalamos anteriormente el servidor con autoridad (registro NS) es el servidor <em>ns1.example.org</em> que, en realidad, es el servidor con autoridad del dominio example.org.</p>
+
+</div>
+
+        </div>
+
+    </body>
+
+</html>
