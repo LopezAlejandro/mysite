@@ -11,19 +11,27 @@ highlight_code = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
-theme = "hyde"
+theme = "Zulma"
+
+taxonomies = [
+    {name = "categories"},
+    {name = "tags", paginate_by = 5, rss = true},
+    {name = "authors", rss = true},
+]
 
 title = "Bitácora de un Sysadmin"
 description = "Notas de un administrador"
 
 [extra]
 # Put all your custom variables here
+zulma_themes = ["default", "darkly", "flatly", "pulse", "simplex", "lux", "slate", "solar", "superhero"]
 
-hyde_theme = "theme-base-08"
-hyde_reverse = true
-hyde_sticky = true
-
-hyde_links = [
-    {url = "https://biblioteca.fadu.uba.ar", name = "Biblioteca FADU"},
-    {url = "https://www.cbc.uba.ar", name = "Ciclo Básico Común"},
+zulma_menu = [
+    {url = "$BASE_URL/categories", name = "Categorias"},
+    {url = "$BASE_URL/tags", name = "Tags"},
+    {url = "$BASE_URL/authors", name = "Autores"}
 ]
+zulma_brand = {text = "Inicio"}
+zulma_theme = "darkly"
+zulma_allow_theme_selection = true
+zulma_title = "Bitácora de un Sysadmin"

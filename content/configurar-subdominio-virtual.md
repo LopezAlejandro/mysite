@@ -1,7 +1,11 @@
 +++
 title= "Configurar subdominio en un DNS"
 date= 2020-05-18T15:42:00-03:00
-tags= ["documentacion"]
+
+[taxonomies]
+categories = ["dns"]
+tags = ["subdominios", "mail"]
+authors = ["Alejandro Lopez"]
 +++
 
 ### Crear un subdominio virtual

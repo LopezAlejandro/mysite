@@ -1,7 +1,11 @@
 +++
 title= "Como Subir El Sitio"
 date= 2019-09-27T12:32:20-03:00
-tags= ["documentacion"]
+
+[taxonomies]
+categories = ["web"]
+tags = ["documentacion", "git"]
+authors = ["Alejandro Lopez"]
 +++
 
 ## Como subir el sitio a git
