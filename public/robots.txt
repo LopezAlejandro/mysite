@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://lopezalejandro.github.io/mysite/public/sitemap.xml
