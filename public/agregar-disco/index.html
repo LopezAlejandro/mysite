@@ -54,8 +54,9 @@
 <body>
     
     
-    <!-- START NAV -->
-    
+<!-- START NAV -->
+
+
     
 
 <header>
@@ -125,40 +126,16 @@
 
 
     
-    <!-- END NAV -->
-    <main class="index">
-        <!-- START HERO TITLE -->
-        
-        
 
-
-
-
-<section class="is-bold hero is-primary">
-    <header>
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <h1 class="title">Bitácora de un Sysadmin</h1>
-            </div>
-        </div>
-    </header>
-</section>
-
-        
-        <!-- END HERO TITLE -->
-        <div class="container">
-            <!-- START ARTICLE FEED -->
-            
-            
-<section class="articles">
-    <div class="columns is-desktop">
-        <div class="column is-10-desktop is-offset-1-desktop">
-            
-            
-<article itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="card article">
-        <div class="card-content">
-            
+<!-- END NAV -->
+<main>
+    <section class="container">
+        <div class="columns is-desktop">
+            <div class="column is-10-desktop is-offset-1-desktop">
+                <article itemscope itemtype="http://schema.org/BlogPosting">
+                    <div class="card article">
+                        <div class="card-content">
+                            
 <header>
     <div class="has-text-centered">
         <a href="https://lopezalejandro.github.io/mysite/public/agregar-disco/">
@@ -187,201 +164,123 @@
     </div>
 </header>
 
-            
+                            <div itemprop="articleBody" class="content article-body">
+                                <h2 id="agregar-un-disco-a-una-vm">Agregar un disco a una VM</h2>
+<ol>
+<li>
+<p>Hacer ssh al servidor :
+ssh root@IP del server</p>
+</li>
+<li>
+<p>Buscar la ubicacion del datastore con el siguiente comando :
+esxcli storage filesystem list</p>
+</li>
+<li>
+<p>Cambiar a ese directorio :
+cd Punto de montaje</p>
+</li>
+<li>
+<p>Crear el disco con el siguiente comando :
+vmkfstools --createvirtualdisk XXXG --diskformat thin <nameYourDriveHere>.vmdk
+Donde XXX es el tamaño del disco</p>
+</li>
+<li>
+<p>Agregar el disco en caliente  de la siguiente manera :
+vim-cmd vmsvc/getallvms</p>
+<ul>
+<li>
+<p>Asi obtenemos el id de la maquina.</p>
+</li>
+<li>
+<p>Ahora agregamos el disco :</p>
+<p>vim-cmd vmsvc/device.diskaddexisting <vmid> &lt;/vmfs/volumes/pathToDisk.vmdk&gt; 0 1	</p>
+</li>
+<li>
+<p>El 0 indica la placa SCSI y el 1 muestra los dispositivos conectados a la placa, el valor se va incrementando a medida que agregamos discos.	</p>
+</li>
+</ul>
+</li>
+</ol>
+
+                            </div>
+                        </div>
+                        
+                        
+<footer class="card-footer">
+    <div class="article-footer">
+        <div class="columns is-multiline">
+            <div class="column is-12">
+                <p>
+                    Published
+                    
+
+<time datetime="2020-08-28">
+    2020-08-28
+</time>
+
+
+                    
+
+by
+
+<a href="https://lopezalejandro.github.io/mysite/public/authors/alejandro-lopez/">
+    <span class="tag is-primary">Alejandro Lopez </span>
+</a>
+
+
+
+
+                    
+
+
+in <a href="https://lopezalejandro.github.io/mysite/public/categories/virtualizacion/">
+    <span class="tag is-success">
+        Virtualizacion
+    </span>
+</a>
+
+
+                    
+
+and tagged
+
+<a href="https://lopezalejandro.github.io/mysite/public/tags/documentacion/">
+    <span class="tag is-link">documentacion </span>
+</a>
+
+
+
+and
+
+
+
+
+<a href="https://lopezalejandro.github.io/mysite/public/tags/vmware/">
+    <span class="tag is-link">vmware </span>
+</a>
+
+
+
+
+
+
+                </p>
+            </div>
+            <div class="column">
+                <a class="button is-pulled-right is-info" href="/">Back Home</a>
+            </div>
         </div>
     </div>
-</article>
+</footer>
 
-            
-            
-<article itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="card article">
-        <div class="card-content">
-            
-<header>
-    <div class="has-text-centered">
-        <a href="https://lopezalejandro.github.io/mysite/public/vmware-copiar/">
-            <p class="title article-title">Copiar una VM de un servidor ESXi a otro
-            </p>
-        </a>
-        <div class="tags has-addons level-item">
-            <span class="tag is-rounded">2020-08-27</span>
-            
-            <span class="tag is-rounded is-primary">
-                    
-                    Alejandro Lopez
-                    
-                    
-            </span>
-                       
-            <span class="tag is-rounded">
-<svg class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
-    stroke-linejoin="round" stroke-width="6.25%">
-    <circle cx="16" cy="16" r="14" />
-    <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>&nbsp;1 minute read</span>
-</span>
+                        
+                    </div>
+                </article>
+            </div>
         </div>
-    </div>
-</header>
+    </section>
+</main>
 
-            
-        </div>
-    </div>
-</article>
-
-            
-            
-<article itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="card article">
-        <div class="card-content">
-            
-<header>
-    <div class="has-text-centered">
-        <a href="https://lopezalejandro.github.io/mysite/public/vmware-comandos/">
-            <p class="title article-title">Comandos útiles de VMware
-            </p>
-        </a>
-        <div class="tags has-addons level-item">
-            <span class="tag is-rounded">2020-06-09</span>
-            
-            <span class="tag is-rounded is-primary">
-                    
-                    Alejandro Lopez
-                    
-                    
-            </span>
-                       
-            <span class="tag is-rounded">
-<svg class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
-    stroke-linejoin="round" stroke-width="6.25%">
-    <circle cx="16" cy="16" r="14" />
-    <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>&nbsp;1 minute read</span>
-</span>
-        </div>
-    </div>
-</header>
-
-            
-        </div>
-    </div>
-</article>
-
-            
-            
-<article itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="card article">
-        <div class="card-content">
-            
-<header>
-    <div class="has-text-centered">
-        <a href="https://lopezalejandro.github.io/mysite/public/configurar-subdominio-virtual/">
-            <p class="title article-title">Configurar subdominio en un DNS
-            </p>
-        </a>
-        <div class="tags has-addons level-item">
-            <span class="tag is-rounded">2020-05-18</span>
-            
-            <span class="tag is-rounded is-primary">
-                    
-                    Alejandro Lopez
-                    
-                    
-            </span>
-                       
-            <span class="tag is-rounded">
-<svg class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
-    stroke-linejoin="round" stroke-width="6.25%">
-    <circle cx="16" cy="16" r="14" />
-    <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>&nbsp;2 minute read</span>
-</span>
-        </div>
-    </div>
-</header>
-
-            
-        </div>
-    </div>
-</article>
-
-            
-            
-<article itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="card article">
-        <div class="card-content">
-            
-<header>
-    <div class="has-text-centered">
-        <a href="https://lopezalejandro.github.io/mysite/public/convertir-a-pdf/">
-            <p class="title article-title">Como convertir doc&#x27;s a PDF
-            </p>
-        </a>
-        <div class="tags has-addons level-item">
-            <span class="tag is-rounded">2020-05-01</span>
-            
-            <span class="tag is-rounded is-primary">
-                    
-                    Alejandro Lopez
-                    
-                    
-            </span>
-                       
-            <span class="tag is-rounded">
-<svg class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
-    stroke-linejoin="round" stroke-width="6.25%">
-    <circle cx="16" cy="16" r="14" />
-    <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>&nbsp;1 minute read</span>
-</span>
-        </div>
-    </div>
-</header>
-
-            
-        </div>
-    </div>
-</article>
-
-            
-        </div>
-    </div>
-</section>
-
-            
-            <!-- END ARTICLE FEED -->
-            <!-- START PAGINATION -->
-            
-            
-<section class="paginator-container">
-    <div class="columns">
-        <div class="column is-10 is-offset-1">
-            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                
-                <a class="button is-primary pagination-previous" disabled title="This is the first page">&laquo;
-                    Previous</a>
-                
-                <ul class="pagination-list">
-                    <li>Page 1 of 3</li>
-                </ul>
-                
-                <a class="button is-primary pagination-next" href="https:&#x2F;&#x2F;lopezalejandro.github.io&#x2F;mysite&#x2F;public&#x2F;page&#x2F;2&#x2F;">Next &raquo;</a>
-                
-            </nav>
-        </div>
-    </div>
-</section>
-
-            
-            <!-- END PAGINATION -->
-        </div>
-    </main>
-    
     
     
 
