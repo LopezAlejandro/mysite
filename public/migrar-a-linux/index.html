@@ -172,10 +172,12 @@
 <p>Desde la terminal de linux pasamos la codificacion del texto CP850 a MS-ANSI.<br />
 Esto elimina los caracteres extraños.<br>
 <strong>iconv -f CP850 -t MS-ANSI BASE.TXT -o BASE1.TXT</strong></p>
+<p>Si esto da error probar con :</><br>
+<strong>iconv -f CP850 -t MS-ANSI//TRANSLIT BASE.TXT -o BASE1.TXT</strong></p>    
 </li>
 <li>
 <p>Con el archivo generado, creamos una base nueva<br>
-<strong>id21 BASE1.TXT create=BASE</strong></p>
+<strong>id2i BASE1.TXT create=BASE tell=1</strong></p>
 </li>
 <li>
 <p>Regeneramos el indice y reinvertimos<br>
